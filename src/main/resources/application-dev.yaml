@@ -1,0 +1,75 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 10.84.5.138)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = mmp)))
+    username: MMP_CAMPAIGNX
+    password: mmp123
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      pool-name: Hikari
+      auto-commit: false
+      connection-timeout: 10000
+      maximum-pool-size: 5
+      minimum-idle: 10
+      max-lifetime: 10000 #thoi gian ton tai cua connection trong pool, default: 1800000 miliseconds
+      idle-timeout: 5000 #thoi gian nhan roi toi da cua connection trong pool, default: 600000 miliseconds
+  rabbitmq:
+    host: 10.84.5.48
+    port: 5672
+    username: guest
+    password: guest
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+  task:
+    scheduling:
+      pool:
+        size: 5
+  main:
+    allow-circular-references: true
+server:
+  port: 8070
+
+logging:
+  config: logging-config.xml
+
+properties:
+  current-participant:
+    vnp: "02"
+    vtl: "04"
+    vms: "01"
+    vnm: "05"
+    gtel: "07"
+  telco-id:
+    vnp: 1
+    vtl: 3
+    vms: 2
+    vnm: 5
+    gtel: 4
+
+redis-config:
+  ip:
+    redis-server-ip: 10.84.5.48
+  password:
+  port:
+    redis-server-port: 6379
+  max-total: 128
+  max-idle: 128
+  min-idle: 16
+  timeout: 10000
+  key-prefix-mnp: "cx:mnp"
+  key-prefix-blacklist: "cx:blacklist"
+
+schedule-config:
+  mnp-failed-retry: 0 0/5 * * * ?
+  blacklist-failed-retry: 0 0/5 * * * ?
+  reload-package: 0 0/5 * * * ?
+  retry-config: 3
+  time-reload-subpackage: 60
+  time-reload-commandcode: 60
+connection-name: notify_event
+regular-queuename: rq.queue.notify.event.regular
+
+
+#portal-notify:
+#  url:
+#    - http://10.84.70.164/AgentUI/mnp/change
+#    - http://10.84.70.164/AgentUI/mnp/change
